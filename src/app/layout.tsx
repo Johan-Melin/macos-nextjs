@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Dock from "../components/Dock";
+import { AppWindowProvider } from "../context/AppWindowContext";
+import WindowHost from "../components/WindowHost";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased pb-28`}
       >
-        <main className="min-h-screen">{children}</main>
-        <Dock />
+        <AppWindowProvider>
+          <main className="min-h-screen">{children}</main>
+          <WindowHost />
+          <Dock />
+        </AppWindowProvider>
       </body>
     </html>
   );
