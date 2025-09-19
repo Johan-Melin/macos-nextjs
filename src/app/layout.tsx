@@ -4,6 +4,7 @@ import "./globals.css";
 import Dock from "../components/Dock";
 import { AppWindowProvider } from "../context/AppWindowContext";
 import WindowHost from "../components/WindowHost";
+import { AppearanceProvider } from "../context/AppearanceContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased pb-28`}
       >
-        <AppWindowProvider>
-          <main className="min-h-screen">{children}</main>
-          <WindowHost />
-          <Dock />
-        </AppWindowProvider>
+        <AppearanceProvider>
+          <AppWindowProvider>
+            <main className="min-h-screen">{children}</main>
+            <WindowHost />
+            <Dock />
+          </AppWindowProvider>
+        </AppearanceProvider>
       </body>
     </html>
   );

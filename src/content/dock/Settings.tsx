@@ -1,10 +1,82 @@
 export const title = "Settings";
 
 export default function Settings() {
+  return <AppearanceSettings />;
+}
+
+import { useAppearance } from "../../context/AppearanceContext";
+
+function AppearanceSettings() {
+  const { mode, setMode, tint, setTint } = useAppearance();
+
+  const swatches: { name: string; hex: string }[] = [
+    { name: "Graphite", hex: "#8e8e93" },
+    { name: "Blue", hex: "#0a84ff" },
+    { name: "Red", hex: "#ff453a" },
+    { name: "Green", hex: "#30d158" },
+    { name: "Orange", hex: "#ff9f0a" },
+    { name: "Purple", hex: "#af52de" },
+  ];
+
   return (
-    <div className="space-y-2">
-      <h2 className="text-xl font-semibold">Settings</h2>
-      <p className="opacity-80">Adjust preferences for the UI.</p>
+    <div className="space-y-6">
+      <header className="space-y-1">
+        <h2 className="text-xl font-semibold">Appearance</h2>
+        <p className="text-sm opacity-70">Choose Light/Dark/System/Auto and a tint.</p>
+      </header>
+
+      {/* Mode */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Mode</h3>
+        <div className="inline-flex overflow-hidden rounded-lg border border-black/10 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/10">
+          {([
+            { key: "system", label: "System", tip: "Match your OS appearance setting" },
+            { key: "light", label: "Light", tip: "Always use Light appearance" },
+            { key: "dark", label: "Dark", tip: "Always use Dark appearance" },
+            { key: "auto", label: "Auto", tip: "Light by day, Dark by night (based on local time)" },
+          ] as const).map(({ key, label, tip }) => (
+            <button
+              key={key}
+              onClick={() => setMode(key)}
+              className={`px-3 py-1.5 text-sm transition-colors ${
+                mode === key
+                  ? "bg-white text-neutral-900 dark:bg-white/20 dark:text-white"
+                  : "text-neutral-700 hover:bg-white/70 dark:text-neutral-300 dark:hover:bg-white/10"
+              }`}
+              title={tip}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Tint */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Tint</h3>
+        <div className="flex flex-wrap items-center gap-3">
+          {swatches.map(({ name, hex }) => (
+            <TintDot key={hex} color={hex} label={name} active={tint.toLowerCase() === hex.toLowerCase()} onClick={() => setTint(hex)} />
+          ))}
+        </div>
+      </section>
     </div>
+  );
+}
+
+function TintDot({ color, label, active, onClick }: { color: string; label: string; active?: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`grid h-8 w-8 place-items-center rounded-full border shadow-sm transition-colors ${
+        active
+          ? "border-black/20 bg-white dark:border-white/20 dark:bg-white/10"
+          : "border-black/10 bg-white/60 hover:bg-white/80 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/20"
+      }`}
+      aria-label={`${label} tint (${color})`}
+      title={`${label}`}
+    >
+      <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: color }} />
+    </button>
   );
 }

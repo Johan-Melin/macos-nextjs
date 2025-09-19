@@ -8,15 +8,19 @@ export default function MacWindow({ title, children }: { title: string; children
 
   return (
     <div
-      className="pointer-events-auto overflow-hidden bg-white/95 text-neutral-800 shadow-2xl backdrop-blur-xl dark:bg-neutral-900/95 dark:text-neutral-100
-                 fixed inset-0 md:static md:overflow-hidden md:rounded-xl md:border md:border-white/20 md:bg-white/80 md:dark:border-white/10 md:dark:bg-neutral-900/80"
+      className="pointer-events-auto overflow-hidden text-neutral-800 shadow-2xl backdrop-blur-xl dark:text-neutral-100
+                 fixed inset-0 md:static md:overflow-hidden md:rounded-xl md:border md:border-white/20 md:dark:border-white/10"
       style={{
         paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
+        background: "var(--window-bg)",
       }}
     >
       {/* Titlebar */}
-      <div className="sticky top-0 z-10 flex items-center gap-2 border-b border-black/5 bg-gradient-to-b from-white/80 to-white/50 px-3 py-2 backdrop-blur md:static md:border-b md:from-white/70 md:to-white/40 dark:border-white/10 dark:from-neutral-900/70 dark:to-neutral-900/50 md:dark:from-neutral-900/60 md:dark:to-neutral-900/40">
+      <div
+        className="sticky top-0 z-10 flex items-center gap-2 border-b border-black/5 px-3 py-2 backdrop-blur md:static dark:border-white/10"
+        style={{ background: "var(--panel-bg)" }}
+      >
         {/* Traffic lights */}
         <div className="flex items-center gap-2">
           <button
