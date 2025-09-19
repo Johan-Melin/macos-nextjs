@@ -7,9 +7,16 @@ export default function MacWindow({ title, children }: { title: string; children
   const { close } = useAppWindow();
 
   return (
-    <div className="pointer-events-auto overflow-hidden rounded-xl border border-white/20 bg-white/80 text-neutral-800 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-neutral-900/80 dark:text-neutral-100">
+    <div
+      className="pointer-events-auto overflow-hidden bg-white/95 text-neutral-800 shadow-2xl backdrop-blur-xl dark:bg-neutral-900/95 dark:text-neutral-100
+                 fixed inset-0 md:static md:overflow-hidden md:rounded-xl md:border md:border-white/20 md:bg-white/80 md:dark:border-white/10 md:dark:bg-neutral-900/80"
+      style={{
+        paddingTop: "env(safe-area-inset-top)",
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
+    >
       {/* Titlebar */}
-      <div className="flex items-center gap-2 border-b border-black/5 bg-gradient-to-b from-white/70 to-white/40 px-3 py-2 dark:border-white/10 dark:from-neutral-900/60 dark:to-neutral-900/40">
+      <div className="sticky top-0 z-10 flex items-center gap-2 border-b border-black/5 bg-gradient-to-b from-white/80 to-white/50 px-3 py-2 backdrop-blur md:static md:border-b md:from-white/70 md:to-white/40 dark:border-white/10 dark:from-neutral-900/70 dark:to-neutral-900/50 md:dark:from-neutral-900/60 md:dark:to-neutral-900/40">
         {/* Traffic lights */}
         <div className="flex items-center gap-2">
           <button
@@ -27,7 +34,7 @@ export default function MacWindow({ title, children }: { title: string; children
         </div>
       </div>
       {/* Content */}
-      <div className="max-h-[70vh] w-[90vw] max-w-2xl overflow-auto p-4 md:w-[640px]">
+      <div className="h-[calc(100dvh-48px)] overflow-auto p-4 md:h-auto md:max-h-[70vh] md:w-[90vw] md:max-w-2xl md:overflow-auto md:p-4 md:w-[640px]">
         {children}
       </div>
     </div>
