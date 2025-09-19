@@ -8,12 +8,13 @@ export default function MacWindow({ title, children }: { title: string; children
 
   return (
     <div
-      className="pointer-events-auto overflow-hidden text-neutral-800 shadow-2xl backdrop-blur-xl dark:text-neutral-100
+      className="pointer-events-auto overflow-hidden shadow-2xl backdrop-blur-xl
                  fixed inset-0 md:static md:overflow-hidden md:rounded-xl md:border md:border-white/20 md:dark:border-white/10"
       style={{
         paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
         background: "var(--window-bg)",
+        color: "var(--foreground)",
       }}
     >
       {/* Titlebar */}

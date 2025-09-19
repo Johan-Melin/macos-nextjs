@@ -40,8 +40,8 @@ function AppearanceSettings() {
               onClick={() => setMode(key)}
               className={`px-3 py-1.5 text-sm transition-colors ${
                 mode === key
-                  ? "bg-white text-neutral-900 dark:bg-white/20 dark:text-white"
-                  : "text-neutral-700 hover:bg-white/70 dark:text-neutral-300 dark:hover:bg-white/10"
+                  ? "bg-white dark:bg-black/20 font-bold"
+                  : "hover:bg-white/70 dark:hover:bg-white/10"
               }`}
               title={tip}
             >
