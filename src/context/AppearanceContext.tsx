@@ -14,11 +14,13 @@ export type AppearanceMode = "system" | "light" | "dark" | "auto";
 export type AppearanceState = {
   mode: AppearanceMode;
   tint: string; // hex color to tint UI subtly
+  backgroundStyle: "solid" | "linear" | "radial";
 };
 
 type AppearanceContextValue = AppearanceState & {
   setMode: (m: AppearanceMode) => void;
   setTint: (hex: string) => void;
+  setBackgroundStyle: (s: AppearanceState["backgroundStyle"]) => void;
 };
 
 const STORAGE_KEY = "macos-appearance";
@@ -26,6 +28,7 @@ const STORAGE_KEY = "macos-appearance";
 const DEFAULT_STATE: AppearanceState = {
   mode: "system",
   tint: "#a2845e", // a pleasant brown by default
+  backgroundStyle: "solid",
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -65,10 +68,17 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
 
     const tint = state.tint;
 
-    // Stronger mix for overall page background
-    const pageMix = dark
+    // Backgrounds depending on preference
+    const solidBg = dark
       ? `color-mix(in oklab, ${baseBg} 85%, ${tint} 15%)`
       : `color-mix(in oklab, ${baseBg} 90%, ${tint} 10%)`;
+    const linearBg = dark
+      ? `linear-gradient(135deg, color-mix(in oklab, ${baseBg} 78%, ${tint} 22%) 0%, ${baseBg} 55%, color-mix(in oklab, ${baseBg} 85%, ${tint} 15%) 100%)`
+      : `linear-gradient(135deg, color-mix(in oklab, ${baseBg} 88%, ${tint} 12%) 0%, ${baseBg} 60%, color-mix(in oklab, ${baseBg} 92%, ${tint} 8%) 100%)`;
+    const radialBg = dark
+      ? `radial-gradient(1200px circle at 15% 10%, color-mix(in oklab, ${baseBg} 78%, ${tint} 22%) 0%, ${baseBg} 55%)`
+      : `radial-gradient(1200px circle at 15% 10%, color-mix(in oklab, ${baseBg} 90%, ${tint} 10%) 0%, ${baseBg} 60%)`;
+    const pageBg = state.backgroundStyle === "linear" ? linearBg : state.backgroundStyle === "radial" ? radialBg : solidBg;
 
     // Window and panel with stronger tint; panel slightly contrasted from window
     const windowBg = dark
@@ -79,8 +89,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       : `color-mix(in oklab, ${windowBg} 92%, black 8%)`;
 
     // Use the tinted mix as the global background so the whole site subtly tints
-    root.style.setProperty("--background", pageMix);
-    root.style.setProperty("--app-bg", pageMix);
+    root.style.setProperty("--background", pageBg);
     root.style.setProperty("--window-bg", windowBg);
     root.style.setProperty("--panel-bg", panelBg);
     // High contrast dock icon/text color
@@ -96,6 +105,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       ...state,
       setMode: (mode) => setState((s) => ({ ...s, mode })),
       setTint: (tint) => setState((s) => ({ ...s, tint })),
+      setBackgroundStyle: (backgroundStyle) => setState((s) => ({ ...s, backgroundStyle })),
     }),
     [state]
   );
@@ -108,3 +118,4 @@ export function useAppearance() {
   if (!ctx) throw new Error("useAppearance must be used within AppearanceProvider");
   return ctx;
 }
+

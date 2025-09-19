@@ -1,3 +1,5 @@
+"use client";
+
 export const title = "Settings";
 
 export default function Settings() {
@@ -7,7 +9,7 @@ export default function Settings() {
 import { useAppearance } from "../../context/AppearanceContext";
 
 function AppearanceSettings() {
-  const { mode, setMode, tint, setTint } = useAppearance();
+  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle } = useAppearance();
 
   const swatches: { name: string; hex: string }[] = [
     { name: "Graphite", hex: "#8e8e93" },
@@ -22,7 +24,6 @@ function AppearanceSettings() {
     <div className="space-y-6">
       <header className="space-y-1">
         <h2 className="text-xl font-semibold">Appearance</h2>
-        <p className="text-sm opacity-70">Choose Light/Dark/System/Auto and a tint.</p>
       </header>
 
       {/* Mode */}
@@ -57,6 +58,31 @@ function AppearanceSettings() {
         <div className="flex flex-wrap items-center gap-3">
           {swatches.map(({ name, hex }) => (
             <TintDot key={hex} color={hex} label={name} active={tint.toLowerCase() === hex.toLowerCase()} onClick={() => setTint(hex)} />
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop Background */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Background</h3>
+        <div className="inline-flex overflow-hidden rounded-lg border border-black/10 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/10">
+          {([
+            { key: "solid", label: "Solid", tip: "Softly tinted solid background" },
+            { key: "linear", label: "Linear", tip: "Tinted linear gradient background" },
+            { key: "radial", label: "Radial", tip: "Tinted radial gradient background" },
+          ] as const).map(({ key, label, tip }) => (
+            <button
+              key={key}
+              onClick={() => setBackgroundStyle(key)}
+              className={`px-3 py-1.5 text-sm transition-colors ${
+                backgroundStyle === key
+                  ? "bg-white dark:bg-black/20 font-bold"
+                  : "hover:bg-white/70 dark:hover:bg-white/10"
+              }`}
+              title={tip}
+            >
+              {label}
+            </button>
           ))}
         </div>
       </section>
