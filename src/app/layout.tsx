@@ -29,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pb-28`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppearanceProvider>
           <AppWindowProvider>
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-dvh">{children}</main>
             <WindowHost />
             <Dock />
           </AppWindowProvider>
