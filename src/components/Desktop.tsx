@@ -2,16 +2,22 @@
 
 import { desktopItems } from "../content/desktop";
 import { useAppWindow } from "../context/AppWindowContext";
+import { useAppearance } from "../context/AppearanceContext";
 
 export default function Desktop() {
   const { open } = useAppWindow();
+  const { desktopShortcutsOrientation } = useAppearance();
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-10 select-none"
       aria-label="Desktop"
     >
-      <div className="pointer-events-auto p-4 md:p-6 grid grid-cols-4 gap-4 w-fit">
+      <div
+        className={`pointer-events-auto p-4 md:p-6 grid gap-4 w-fit ${
+          desktopShortcutsOrientation === "vertical" ? "grid-cols-1" : "grid-cols-4"
+        }`}
+      >
         {desktopItems.map(({ key, title, Icon }) => (
           <button
             key={key}

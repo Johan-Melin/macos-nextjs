@@ -18,6 +18,7 @@ export type AppearanceState = {
   animations: boolean;
   showDockLabels: boolean;
   osStyle: "mac" | "windows";
+  desktopShortcutsOrientation: "horizontal" | "vertical";
 };
 
 type AppearanceContextValue = AppearanceState & {
@@ -27,6 +28,7 @@ type AppearanceContextValue = AppearanceState & {
   setAnimations: (a: boolean) => void;
   setShowDockLabels: (v: boolean) => void;
   setOsStyle: (v: AppearanceState["osStyle"]) => void;
+  setDesktopShortcutsOrientation: (v: AppearanceState["desktopShortcutsOrientation"]) => void;
 };
 
 const STORAGE_KEY = "macos-appearance";
@@ -38,6 +40,7 @@ const DEFAULT_STATE: AppearanceState = {
   animations: true,
   showDockLabels: false,
   osStyle: "mac",
+  desktopShortcutsOrientation: "horizontal",
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -123,6 +126,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       setAnimations: (animations) => setState((s) => ({ ...s, animations })),
       setShowDockLabels: (showDockLabels) => setState((s) => ({ ...s, showDockLabels })),
       setOsStyle: (osStyle) => setState((s) => ({ ...s, osStyle })),
+      setDesktopShortcutsOrientation: (desktopShortcutsOrientation) => setState((s) => ({ ...s, desktopShortcutsOrientation })),
     }),
     [state]
   );

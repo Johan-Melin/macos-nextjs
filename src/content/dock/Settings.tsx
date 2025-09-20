@@ -9,7 +9,7 @@ export default function Settings() {
 import { useAppearance } from "../../context/AppearanceContext";
 
 function AppearanceSettings() {
-  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations, showDockLabels, setShowDockLabels, osStyle, setOsStyle } = useAppearance();
+  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations, showDockLabels, setShowDockLabels, osStyle, setOsStyle, desktopShortcutsOrientation, setDesktopShortcutsOrientation } = useAppearance();
 
   const swatches: { name: string; hex: string }[] = [
     { name: "Graphite", hex: "#8e8e93" },
@@ -41,6 +41,30 @@ function AppearanceSettings() {
               onClick={() => setMode(key)}
               className={`px-3 py-1.5 text-sm transition-colors ${
                 mode === key
+                  ? "bg-white dark:bg-black/20 font-bold"
+                  : "hover:bg-white/70 dark:hover:bg-white/10"
+              }`}
+              title={tip}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Desktop</h3>
+        <div className="inline-flex overflow-hidden rounded-lg border border-black/10 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/10">
+          {([
+            { key: "horizontal", label: "Horizontal", tip: "Grid across" },
+            { key: "vertical", label: "Vertical", tip: "Single column" },
+          ] as const).map(({ key, label, tip }) => (
+            <button
+              key={key}
+              onClick={() => setDesktopShortcutsOrientation(key)}
+              className={`px-3 py-1.5 text-sm transition-colors ${
+                desktopShortcutsOrientation === key
                   ? "bg-white dark:bg-black/20 font-bold"
                   : "hover:bg-white/70 dark:hover:bg-white/10"
               }`}
