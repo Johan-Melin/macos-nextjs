@@ -15,7 +15,8 @@ type AppWindowContextValue = {
 const AppWindowContext = createContext<AppWindowContextValue | undefined>(undefined);
 
 export function AppWindowProvider({ children }: { children: ReactNode }) {
-  const [activeApp, setActiveApp] = useState<AppKey>(null);
+  // Default to opening the News window on initial load
+  const [activeApp, setActiveApp] = useState<AppKey>("News");
 
   const value = useMemo<AppWindowContextValue>(() => ({
     activeApp,
