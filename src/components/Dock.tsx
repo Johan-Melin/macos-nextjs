@@ -3,10 +3,12 @@
 import { useMemo } from "react";
 import { useAppWindow } from "../context/AppWindowContext";
 import { dockItems } from "../content/dock";
+import { useAppearance } from "../context/AppearanceContext";
 
 export default function Dock() {
   const apps = useMemo(() => dockItems, []);
   const { toggle, activeApp } = useAppWindow();
+  const { showDockLabels } = useAppearance();
 
   return (
     <div
@@ -22,14 +24,20 @@ export default function Dock() {
           <button
             key={key}
             onClick={() => toggle(key)}
-            className={`group relative grid h-12 w-12 place-items-center rounded-xl ring-inset transition-colors duration-150 md:h-16 md:w-16 md:transition-transform md:hover:-translate-y-0.5`}
+            className={`group relative flex flex-col items-center justify-center ${showDockLabels ? "gap-1 h-16 w-16" : "h-12 w-12 md:h-16 md:w-16"} rounded-xl ring-inset transition-colors duration-150 md:transition-transform md:hover:-translate-y-0.5`}
             style={{ color: "var(--dock-fg)" }}
             title={title}
           >
             <Icon className="h-6 w-6 md:h-8 md:w-8" style={{ color: "var(--dock-fg)" }} />
-            <span className="pointer-events-none absolute -top-7 hidden rounded-md bg-black/80 px-2 py-0.5 text-xs text-white opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 md:block">
-              {title}
-            </span>
+            {showDockLabels ? (
+              <span className="mt-0.5 text-[10px] leading-none md:text-xs opacity-90" style={{ color: "var(--dock-fg)" }}>
+                {title}
+              </span>
+            ) : (
+              <span className="pointer-events-none absolute -top-7 hidden rounded-md bg-black/80 px-2 py-0.5 text-xs text-white opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 md:block">
+                {title}
+              </span>
+            )}
           </button>
         ))}
       </nav>

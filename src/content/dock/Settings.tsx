@@ -9,7 +9,7 @@ export default function Settings() {
 import { useAppearance } from "../../context/AppearanceContext";
 
 function AppearanceSettings() {
-  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations } = useAppearance();
+  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations, showDockLabels, setShowDockLabels } = useAppearance();
 
   const swatches: { name: string; hex: string }[] = [
     { name: "Graphite", hex: "#8e8e93" },
@@ -49,6 +49,27 @@ function AppearanceSettings() {
               {label}
             </button>
           ))}
+        </div>
+      </section>
+
+      {/* Dock */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Dock labels</h3>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowDockLabels(!showDockLabels)}
+            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm shadow-sm transition-colors ${
+              showDockLabels
+                ? "border-black/10 bg-white/70 dark:border-white/10 dark:bg-white/10"
+                : "border-black/10 bg-white dark:border-white/10 dark:bg-white/10"
+            }`}
+            title="Show app names under Dock icons"
+            aria-pressed={showDockLabels}
+          >
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: showDockLabels ? "#10b981" : "#9ca3af" }} />
+            {showDockLabels ? "On" : "Off"}
+          </button>
+          <p className="text-xs opacity-60">Toggle labels under Dock icons.</p>
         </div>
       </section>
 

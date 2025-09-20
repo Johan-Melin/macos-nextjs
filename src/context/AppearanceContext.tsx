@@ -16,6 +16,7 @@ export type AppearanceState = {
   tint: string; // hex color to tint UI subtly
   backgroundStyle: "solid" | "linear" | "radial";
   animations: boolean;
+  showDockLabels: boolean;
 };
 
 type AppearanceContextValue = AppearanceState & {
@@ -23,6 +24,7 @@ type AppearanceContextValue = AppearanceState & {
   setTint: (hex: string) => void;
   setBackgroundStyle: (s: AppearanceState["backgroundStyle"]) => void;
   setAnimations: (a: boolean) => void;
+  setShowDockLabels: (v: boolean) => void;
 };
 
 const STORAGE_KEY = "macos-appearance";
@@ -32,6 +34,7 @@ const DEFAULT_STATE: AppearanceState = {
   tint: "#a2845e", // a pleasant brown by default
   backgroundStyle: "solid",
   animations: true,
+  showDockLabels: true,
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -110,6 +113,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       setTint: (tint) => setState((s) => ({ ...s, tint })),
       setBackgroundStyle: (backgroundStyle) => setState((s) => ({ ...s, backgroundStyle })),
       setAnimations: (animations) => setState((s) => ({ ...s, animations })),
+      setShowDockLabels: (showDockLabels) => setState((s) => ({ ...s, showDockLabels })),
     }),
     [state]
   );
