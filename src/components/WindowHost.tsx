@@ -67,7 +67,7 @@ export default function WindowHost() {
   const { Component, title } = mod;
 
   // Animation classes
-  const wrapperBase = `fixed inset-0 z-40 flex items-center justify-center px-4 py-8 md:py-16 ${
+  const wrapperBase = `pointer-events-none fixed inset-0 z-40 flex items-center justify-center px-4 py-8 md:py-16 ${
     animations ? "transition-all duration-200 ease-out" : ""
   }`;
   const stateClass = animations

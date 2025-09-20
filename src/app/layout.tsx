@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Dock from "../components/Dock";
+import Desktop from "../components/Desktop";
 import { AppWindowProvider } from "../context/AppWindowContext";
 import WindowHost from "../components/WindowHost";
 import { AppearanceProvider } from "../context/AppearanceContext";
@@ -33,7 +34,8 @@ export default function RootLayout({
       >
         <AppearanceProvider>
           <AppWindowProvider>
-            <main className="min-h-dvh">{children}</main>
+            <main className="min-h-dvh relative">{children}</main>
+            <Desktop />
             <WindowHost />
             <Dock />
           </AppWindowProvider>
