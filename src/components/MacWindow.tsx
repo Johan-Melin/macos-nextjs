@@ -19,7 +19,7 @@ export default function MacWindow({ title, children }: { title: string; children
     >
       {/* Titlebar */}
       <div
-        className="sticky top-0 z-10 flex items-center gap-2 border-b border-black/5 px-3 py-2 backdrop-blur md:static dark:border-white/10"
+        className="sticky top-0 z-10 relative flex items-center gap-2 border-b border-black/5 px-3 py-2 backdrop-blur md:static dark:border-white/10"
         style={{ background: "var(--panel-bg)" }}
       >
         {/* Traffic lights */}
@@ -31,10 +31,8 @@ export default function MacWindow({ title, children }: { title: string; children
           >
             <span className="sr-only">Close</span>
           </button>
-          <div className="h-3.5 w-3.5 rounded-full bg-[#febc2e]" />
-          <div className="h-3.5 w-3.5 rounded-full bg-[#28c840]" />
         </div>
-        <div className="mx-auto select-none text-sm font-medium opacity-70">
+        <div className="absolute left-1/2 -translate-x-1/2 select-none text-sm font-medium opacity-70">
           {title}
         </div>
       </div>
