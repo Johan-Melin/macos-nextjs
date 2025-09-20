@@ -6,6 +6,7 @@ import Desktop from "../components/Desktop";
 import { AppWindowProvider } from "../context/AppWindowContext";
 import WindowHost from "../components/WindowHost";
 import { AppearanceProvider } from "../context/AppearanceContext";
+import { DesktopShortcutsProvider } from "../context/DesktopShortcutsContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppearanceProvider>
-          <AppWindowProvider>
-            <main className="min-h-dvh relative">{children}</main>
-            <Desktop />
-            <WindowHost />
-            <Dock />
-          </AppWindowProvider>
+          <DesktopShortcutsProvider>
+            <AppWindowProvider>
+              <main className="min-h-dvh relative">{children}</main>
+              <Desktop />
+              <WindowHost />
+              <Dock />
+            </AppWindowProvider>
+          </DesktopShortcutsProvider>
         </AppearanceProvider>
       </body>
     </html>
