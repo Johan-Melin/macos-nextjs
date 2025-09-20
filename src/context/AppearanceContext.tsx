@@ -15,12 +15,14 @@ export type AppearanceState = {
   mode: AppearanceMode;
   tint: string; // hex color to tint UI subtly
   backgroundStyle: "solid" | "linear" | "radial";
+  animations: boolean;
 };
 
 type AppearanceContextValue = AppearanceState & {
   setMode: (m: AppearanceMode) => void;
   setTint: (hex: string) => void;
   setBackgroundStyle: (s: AppearanceState["backgroundStyle"]) => void;
+  setAnimations: (a: boolean) => void;
 };
 
 const STORAGE_KEY = "macos-appearance";
@@ -29,6 +31,7 @@ const DEFAULT_STATE: AppearanceState = {
   mode: "system",
   tint: "#a2845e", // a pleasant brown by default
   backgroundStyle: "solid",
+  animations: true,
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -106,6 +109,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       setMode: (mode) => setState((s) => ({ ...s, mode })),
       setTint: (tint) => setState((s) => ({ ...s, tint })),
       setBackgroundStyle: (backgroundStyle) => setState((s) => ({ ...s, backgroundStyle })),
+      setAnimations: (animations) => setState((s) => ({ ...s, animations })),
     }),
     [state]
   );
