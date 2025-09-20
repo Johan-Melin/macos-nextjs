@@ -34,20 +34,25 @@ const DEFAULT_STATE: AppearanceState = {
   tint: "#a2845e", // a pleasant brown by default
   backgroundStyle: "solid",
   animations: true,
-  showDockLabels: true,
+  showDockLabels: false,
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
 
 export function AppearanceProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AppearanceState>(() => {
-    if (typeof window === "undefined") return DEFAULT_STATE;
+  // Initialize with defaults on both server and first client render.
+  // Then, after mount, merge any saved preferences from localStorage.
+  const [state, setState] = useState<AppearanceState>(DEFAULT_STATE);
+
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return { ...DEFAULT_STATE, ...JSON.parse(raw) } as AppearanceState;
+      if (raw) {
+        const saved = JSON.parse(raw) as Partial<AppearanceState>;
+        setState((s) => ({ ...s, ...saved }));
+      }
     } catch {}
-    return DEFAULT_STATE;
-  });
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
