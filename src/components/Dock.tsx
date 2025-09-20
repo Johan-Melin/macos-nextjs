@@ -22,8 +22,7 @@ export default function Dock() {
           <button
             key={key}
             onClick={() => toggle(key)}
-            className={`group relative grid h-12 w-12 place-items-center rounded-xl ring-inset transition-colors duration-150 md:h-16 md:w-16 md:transition-transform md:hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-white/60 
-            ${activeApp === key ? "bg-white dark:bg-white/20" : "bg-white/60 md:hover:bg-white/80 dark:bg-white/10 md:dark:hover:bg-white/20"}`}
+            className={`group relative grid h-12 w-12 place-items-center rounded-xl ring-inset transition-colors duration-150 md:h-16 md:w-16 md:transition-transform md:hover:-translate-y-0.5`}
             style={{ color: "var(--dock-fg)" }}
             title={title}
           >
