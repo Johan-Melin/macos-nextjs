@@ -9,7 +9,7 @@ export default function Settings() {
 import { useAppearance } from "../../context/AppearanceContext";
 
 function AppearanceSettings() {
-  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations, showDockLabels, setShowDockLabels } = useAppearance();
+  const { mode, setMode, tint, setTint, backgroundStyle, setBackgroundStyle, animations, setAnimations, showDockLabels, setShowDockLabels, osStyle, setOsStyle } = useAppearance();
 
   const swatches: { name: string; hex: string }[] = [
     { name: "Graphite", hex: "#8e8e93" },
@@ -41,6 +41,30 @@ function AppearanceSettings() {
               onClick={() => setMode(key)}
               className={`px-3 py-1.5 text-sm transition-colors ${
                 mode === key
+                  ? "bg-white dark:bg-black/20 font-bold"
+                  : "hover:bg-white/70 dark:hover:bg-white/10"
+              }`}
+              title={tip}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Platform */}
+      <section className="space-y-3">
+        <h3 className="text-sm font-medium opacity-80">Platform</h3>
+        <div className="inline-flex overflow-hidden rounded-lg border border-black/10 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/10">
+          {([
+            { key: "mac", label: "macOS", tip: "Round traffic-light close on the left" },
+            { key: "windows", label: "Windows", tip: "Square close on the right" },
+          ] as const).map(({ key, label, tip }) => (
+            <button
+              key={key}
+              onClick={() => setOsStyle(key)}
+              className={`px-3 py-1.5 text-sm transition-colors ${
+                osStyle === key
                   ? "bg-white dark:bg-black/20 font-bold"
                   : "hover:bg-white/70 dark:hover:bg-white/10"
               }`}

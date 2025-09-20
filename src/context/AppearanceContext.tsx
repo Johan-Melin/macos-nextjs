@@ -17,6 +17,7 @@ export type AppearanceState = {
   backgroundStyle: "solid" | "linear" | "radial";
   animations: boolean;
   showDockLabels: boolean;
+  osStyle: "mac" | "windows";
 };
 
 type AppearanceContextValue = AppearanceState & {
@@ -25,6 +26,7 @@ type AppearanceContextValue = AppearanceState & {
   setBackgroundStyle: (s: AppearanceState["backgroundStyle"]) => void;
   setAnimations: (a: boolean) => void;
   setShowDockLabels: (v: boolean) => void;
+  setOsStyle: (v: AppearanceState["osStyle"]) => void;
 };
 
 const STORAGE_KEY = "macos-appearance";
@@ -35,6 +37,7 @@ const DEFAULT_STATE: AppearanceState = {
   backgroundStyle: "solid",
   animations: true,
   showDockLabels: false,
+  osStyle: "mac",
 };
 
 const AppearanceContext = createContext<AppearanceContextValue | undefined>(undefined);
@@ -119,6 +122,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       setBackgroundStyle: (backgroundStyle) => setState((s) => ({ ...s, backgroundStyle })),
       setAnimations: (animations) => setState((s) => ({ ...s, animations })),
       setShowDockLabels: (showDockLabels) => setState((s) => ({ ...s, showDockLabels })),
+      setOsStyle: (osStyle) => setState((s) => ({ ...s, osStyle })),
     }),
     [state]
   );
